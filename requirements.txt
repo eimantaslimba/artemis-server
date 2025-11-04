@@ -11,3 +11,4 @@ google-genai
 
 # The Python Imaging Library, used by the SDK to handle image data
 Pillow
+zstandard  # <-- Add this line
