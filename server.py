@@ -72,7 +72,7 @@ try:
     llm = Llama(
         model_path=MODEL_PATH,
         n_gpu_layers=-1,  # Push ALL layers to GPU
-        n_ctx=8192 * 4,  # Context
+        n_ctx=8192,  # Context
         verbose=False,
     )
     print("--- MODEL LOADED ---")
@@ -231,4 +231,4 @@ async def websocket_endpoint(websocket: WebSocket):
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=35443)
+    uvicorn.run(app, host="0.0.0.0", port=6006)
