@@ -1,14 +1,7 @@
-# requirements.txt
-
-# The web framework for building the API
 fastapi
-
-# The server that runs the FastAPI application
 uvicorn[standard]
-
-# The official Google Generative AI SDK
-google-genai
-
-# The Python Imaging Library, used by the SDK to handle image data
-Pillow
-zstandard  # <-- Add this line
+websockets
+pydantic
+zstandard
+llama-cpp-python
+huggingface_hub
