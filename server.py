@@ -72,7 +72,7 @@ try:
     llm = Llama(
         model_path=MODEL_PATH,
         n_gpu_layers=-1,  # Push ALL layers to GPU
-        n_ctx=8192,  # 8k Context
+        n_ctx=8192 * 12,  # Context
         verbose=False,
     )
     print("--- MODEL LOADED ---")
