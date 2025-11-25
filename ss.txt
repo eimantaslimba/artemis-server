@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# 1. PREP SYSTEM
+apt-get update && apt-get install -y git build-essential cmake
+pip install --upgrade pip
+
+# 2. CLONE YOUR REPO
+# Replace this with your actual repo URL
+rm -rf /workspace/repo
+git clone https://github.com/eimantaslimba/artemis-server.git /workspace/repo
+
+# 3. INSTALL REQUIREMENTS
+cd /workspace/repo
+pip install -r requirements.txt
+
+# 4. COMPILE LLAMA-CPP (CUDA FORCE)
+# This is vital for the 3090/4090 to work
+CMAKE_ARGS="-DGGML_CUDA=on" pip install llama-cpp-python --no-cache-dir --force-reinstall --upgrade
+
+# 5. DOWNLOAD GEMMA 3 (Cached)
+# Checks if model exists to avoid re-downloading on restart
+if [ ! -f /workspace/model.gguf ]; then
+    echo "Downloading Gemma 3 27B..."
+    huggingface-cli download unsloth/gemma-3-27b-it-GGUF gemma-3-27b-it-Q4_K_M.gguf --local-dir /workspace --local-dir-use-symlinks False
+    mv /workspace/gemma-3-27b-it-Q4_K_M.gguf /workspace/model.gguf
+fi
+
+# 6. LAUNCH SERVER
+# Pointing to the downloaded model
+export MODEL_PATH="/workspace/model.gguf"
+python3 server.py
